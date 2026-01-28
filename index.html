@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IBONARIUM · ЄДИНА МАТРИЦЯ · Lab №3</title>
-    <meta name="description" content="Лабораторія буття: Багатовимірна матриця симуляцій як шарів одного поля реальності.">
+    <meta name="description"
+        content="Лабораторія буття: Багатовимірна матриця симуляцій як шарів одного поля реальності.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
+
 <body>
     <div id="matrix-container"></div>
     <div id="overlay"></div>
@@ -38,7 +43,7 @@
         <section class="matrix-interface">
             <aside class="layers-panel">
                 <div class="panel-header">МАТРИЦЯ ШАРІВ</div>
-                
+
                 <div class="layer-item active" data-layer="meta">
                     <div class="layer-info">
                         <span class="layer-num">VI</span>
@@ -129,10 +134,6 @@
                         <div class="bar" style="height: 60%"></div>
                     </div>
                 </div>
-                <div class="actions">
-                    <button class="btn-primary" id="save-state">ЗБЕРЕГТИ СТАН (SNAPSHOT)</button>
-                    <button class="btn-secondary" id="compare-days">ПОРІВНЯТИ ДНІ</button>
-                </div>
             </aside>
         </section>
 
@@ -148,4 +149,5 @@
     <script src="viz.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
