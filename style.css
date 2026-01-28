@@ -59,8 +59,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 20px;
-    gap: 20px;
+    padding: 10px;
+    gap: 10px;
 }
 
 /* Header */
@@ -68,7 +68,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 5px 20px;
 }
 
 .logo {
@@ -77,9 +77,9 @@ header {
 }
 
 .glitch {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     position: relative;
     color: var(--accent-primary);
@@ -87,15 +87,15 @@ header {
 
 .version {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: var(--text-dim);
 }
 
 .status-bar {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .status-item {
@@ -128,37 +128,37 @@ header {
 .matrix-interface {
     flex: 1;
     display: grid;
-    grid-template-columns: 320px 1fr 320px;
-    gap: 20px;
+    grid-template-columns: 250px 1fr 250px;
+    gap: 15px;
     min-height: 0;
 }
 
 .layers-panel,
 .control-panel {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     overflow-y: auto;
 }
 
 .panel-header {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     color: var(--text-dim);
     border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 10px;
-    letter-spacing: 2px;
+    padding-bottom: 8px;
+    letter-spacing: 1.5px;
 }
 
 .layer-item {
-    padding: 15px 0;
+    padding: 8px 0;
     transition: all 0.3s ease;
 }
 
 .layer-item.active {
     border-left: 2px solid var(--accent-primary);
-    padding-left: 10px;
+    padding-left: 8px;
 }
 
 .layer-item:hover {
@@ -174,21 +174,21 @@ header {
 
 .layer-num {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 2px 6px;
+    font-size: 0.6rem;
+    padding: 1px 4px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .layer-name {
     font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
 }
 
 .layer-stats {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-dim);
 }
 
@@ -225,10 +225,10 @@ header {
 }
 
 #data-terminal {
-    padding: 15px;
+    padding: 10px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    height: 150px;
+    font-size: 0.65rem;
+    height: 100px;
     overflow-y: hidden;
     position: relative;
 }
@@ -246,32 +246,32 @@ header {
 
 /* Control Panel */
 .analytics-card {
-    padding: 15px 0;
+    padding: 8px 0;
 }
 
 .analytics-card label {
     display: block;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-family: var(--font-mono);
     color: var(--text-dim);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     text-transform: uppercase;
 }
 
 .flow-diagram {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--accent-primary);
     font-family: var(--font-mono);
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     border: 1px dashed var(--glass-border);
 }
 
 .chart-mini {
     display: flex;
     align-items: flex-end;
-    gap: 4px;
-    height: 60px;
+    gap: 3px;
+    height: 40px;
 }
 
 .bar {
