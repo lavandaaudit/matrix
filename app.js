@@ -133,20 +133,6 @@ class IbonariumLab {
     }
 
     setupEventListeners() {
-        document.getElementById('save-state').addEventListener('click', () => {
-            this.log("[CMD] Snapshot saved to local storage.");
-            localStorage.setItem('ibonarium_snapshot', JSON.stringify({
-                date: new Date().toISOString(),
-                state: IBONARIUM_STATE
-            }));
-            gsap.to('body', { backgroundColor: '#101020', duration: 0.1, yoyo: true, repeat: 1 });
-        });
-
-        document.getElementById('compare-days').addEventListener('click', () => {
-            this.log("[CMD] Comparing with historical data (Jan 2026)...");
-            this.log("[RESULT] Average stability increased by 4.2% since singularity.");
-        });
-
         // Layer highlighting
         document.querySelectorAll('.layer-item').forEach(item => {
             item.addEventListener('mouseenter', () => {
