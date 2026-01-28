@@ -33,131 +33,129 @@ class MatrixViz {
     }
 
     createLayers() {
-        // I. TIME / RHYTHM (Base pulse - Lowest Layer)
-        const timeGeometry = new THREE.BufferGeometry();
-        const timePoints = [];
-        for (let i = 0; i < 3000; i++) {
-            timePoints.push((Math.random() - 0.5) * 12, -3, (Math.random() - 0.5) * 8);
-        }
-        timeGeometry.setAttribute('position', new THREE.Float32BufferAttribute(timePoints, 3));
-        const timeMaterial = new THREE.PointsMaterial({
+        // I. TIME / RHYTHM (The Breathing Core - Interwoven Knot)
+        this.layers.time = new THREE.Group();
+        const knotGeo = new THREE.TorusKnotGeometry(0.7, 0.03, 128, 16, 3, 4);
+        const knotMat = new THREE.MeshBasicMaterial({
             color: 0xff3ebf,
-            size: 0.03,
+            wireframe: true,
             transparent: true,
             opacity: 0.6,
             blending: THREE.AdditiveBlending
         });
-        this.layers.time = new THREE.Points(timeGeometry, timeMaterial);
+
+        for (let i = 0; i < 2; i++) {
+            const knot = new THREE.Mesh(knotGeo, knotMat);
+            knot.rotation.y = i * Math.PI / 2;
+            this.layers.time.add(knot);
+        }
         this.scene.add(this.layers.time);
 
-        // II. COSMOS (Background field)
-        const cosmosGeometry = new THREE.BufferGeometry();
-        const cosmosPoints = [];
-        for (let i = 0; i < 8000; i++) {
-            cosmosPoints.push((Math.random() - 0.5) * 25, (Math.random() - 0.5) * 15, -10);
+        // II. COSMOS (Flowing Energy Streams)
+        const streamCount = 2000;
+        const streamGeo = new THREE.BufferGeometry();
+        const streamPos = new Float32Array(streamCount * 3);
+        const streamLife = new Float32Array(streamCount);
+        for (let i = 0; i < streamCount; i++) {
+            streamPos[i * 3] = (Math.random() - 0.5) * 40;
+            streamPos[i * 3 + 1] = (Math.random() - 0.5) * 40;
+            streamPos[i * 3 + 2] = (Math.random() - 0.5) * 40;
+            streamLife[i] = Math.random();
         }
-        cosmosGeometry.setAttribute('position', new THREE.Float32BufferAttribute(cosmosPoints, 3));
-        const cosmosMaterial = new THREE.PointsMaterial({
+        streamGeo.setAttribute('position', new THREE.BufferAttribute(streamPos, 3));
+        this.layers.cosmos = new THREE.Points(streamGeo, new THREE.PointsMaterial({
             color: 0xffbe3e,
-            size: 0.02,
+            size: 0.05,
             transparent: true,
             opacity: 0.4,
             blending: THREE.AdditiveBlending
-        });
-        this.layers.cosmos = new THREE.Points(cosmosGeometry, cosmosMaterial);
+        }));
+        this.layers.cosmos.userData = { life: streamLife };
         this.scene.add(this.layers.cosmos);
 
-        // III. GEO + CLIMATE (Atmospheric waves - Mid Layer)
-        const geoGeometry = new THREE.PlaneGeometry(16, 12, 100, 100);
-        const geoMaterial = new THREE.MeshPhongMaterial({
+        // III. GEO + CLIMATE (The Interwoven Shell - Blue Sphere)
+        const geoGeo = new THREE.IcosahedronGeometry(3.0, 2);
+        const geoMat = new THREE.MeshPhongMaterial({
             color: 0x3eadff,
             wireframe: true,
             transparent: true,
             opacity: 0.3,
-            side: THREE.DoubleSide,
             blending: THREE.AdditiveBlending
         });
-        this.layers.geo = new THREE.Mesh(geoGeometry, geoMaterial);
-        this.layers.geo.rotation.x = -Math.PI / 2.2;
-        this.layers.geo.position.y = -1;
+        this.layers.geo = new THREE.Mesh(geoGeo, geoMat);
         this.scene.add(this.layers.geo);
 
-        // IV. BIO (Growth patterns - Living Layer)
-        const bioGroup = new THREE.Group();
-        for (let i = 0; i < 40; i++) {
-            const stem = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.005, 0.005, 1, 4),
-                new THREE.MeshBasicMaterial({
-                    color: 0x3eff8b,
-                    transparent: true,
-                    opacity: 0.7,
-                    blending: THREE.AdditiveBlending
-                })
+        // IV. BIO (Helical Interweaving)
+        this.layers.bio = new THREE.Group();
+        for (let i = 0; i < 8; i++) {
+            const points = [];
+            for (let j = 0; j <= 50; j++) {
+                const angle = (j / 50) * Math.PI * 4;
+                const r = 2.0 + Math.sin(angle * 0.5) * 0.6;
+                points.push(new THREE.Vector3(
+                    Math.cos(angle + i) * r,
+                    (j / 25 - 1) * 3,
+                    Math.sin(angle + i) * r
+                ));
+            }
+            const curve = new THREE.CatmullRomCurve3(points);
+            const tube = new THREE.Mesh(
+                new THREE.TubeGeometry(curve, 64, 0.02, 8, false),
+                new THREE.MeshBasicMaterial({ color: 0x3eff8b, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending })
             );
-            stem.position.set((Math.random() - 0.5) * 12, -1, (Math.random() - 0.5) * 6);
-            bioGroup.add(stem);
+            this.layers.bio.add(tube);
         }
-        this.layers.bio = bioGroup;
         this.scene.add(this.layers.bio);
 
-        // V. SOCIAL (Chaotic interference - Top Layer)
-        const socialGeometry = new THREE.IcosahedronGeometry(3, 3);
-        const socialMaterial = new THREE.MeshBasicMaterial({
-            color: 0xff3e3e,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.15,
-            blending: THREE.AdditiveBlending
-        });
-        this.layers.social = new THREE.Mesh(socialGeometry, socialMaterial);
-        this.layers.social.position.z = 2;
+        // V. SOCIAL (Interweaving Nodes)
+        this.layers.social = new THREE.Group();
+        const nodeGeo = new THREE.SphereGeometry(0.1, 8, 8);
+        const nodeMat = new THREE.MeshBasicMaterial({ color: 0xff3e3e, blending: THREE.AdditiveBlending });
+        for (let i = 0; i < 30; i++) {
+            const node = new THREE.Mesh(nodeGeo, nodeMat);
+            node.userData = {
+                speed: 0.02 + Math.random() * 0.05
+            };
+            this.layers.social.add(node);
+        }
         this.scene.add(this.layers.social);
 
-        // VI. META (Global field - Container)
-        const metaGeometry = new THREE.SphereGeometry(8, 64, 64);
-        const metaMaterial = new THREE.ShaderMaterial({
-            uniforms: {
-                time: { value: 0 },
-                harmony: { value: 0.88 }
-            },
+        // VI. META (Global Field - Aura)
+        const metaGeo = new THREE.IcosahedronGeometry(8, 4);
+        const metaMat = new THREE.ShaderMaterial({
+            uniforms: { time: { value: 0 }, harmony: { value: 0.88 } },
             vertexShader: `
-                varying vec2 vUv;
-                varying vec3 vPosition;
+                varying vec3 vNormal;
                 void main() {
-                    vUv = uv;
-                    vPosition = position;
+                    vNormal = normalize(normalMatrix * normal);
                     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                 }
             `,
             fragmentShader: `
                 uniform float time;
                 uniform float harmony;
-                varying vec2 vUv;
-                varying vec3 vPosition;
+                varying vec3 vNormal;
                 void main() {
-                    float dist = length(vPosition);
-                    float pulse = sin(dist * 0.5 - time * 2.0) * 0.5 + 0.5;
-                    float alpha = (1.0 - harmony) * 0.1 + pulse * 0.05;
-                    vec3 color = mix(vec3(0.0, 0.95, 1.0), vec3(0.44, 0.0, 1.0), pulse);
-                    gl_FragColor = vec4(color, alpha);
+                    float intensity = pow(0.6 - dot(vNormal, vec3(0, 0, 1.0)), 4.0);
+                    vec3 color = mix(vec3(0.0, 0.6, 1.0), vec3(0.5, 0.0, 1.0), sin(time)*0.5+0.5);
+                    gl_FragColor = vec4(color, intensity * harmony);
                 }
             `,
             transparent: true,
             side: THREE.BackSide,
             blending: THREE.AdditiveBlending
         });
-        this.layers.meta = new THREE.Mesh(metaGeometry, metaMaterial);
+        this.layers.meta = new THREE.Mesh(metaGeo, metaMat);
         this.scene.add(this.layers.meta);
     }
 
-
     addLights() {
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0x00f2ff, 1);
-        pointLight.position.set(5, 5, 5);
-        this.scene.add(pointLight);
+        this.scene.add(new THREE.AmbientLight(0x404040));
+        const p1 = new THREE.PointLight(0xff3ebf, 2, 20);
+        p1.position.set(5, 5, 5);
+        this.scene.add(p1);
     }
+
 
     onResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -168,45 +166,61 @@ class MatrixViz {
     update(state) {
         const t = this.clock.getElapsedTime();
 
-        // I. TIME - Pulse size based on state.time.pulse
-        const timeScale = 1 + Math.sin(t * state.time.pulse) * 0.1;
-        this.layers.time.scale.set(timeScale, timeScale, timeScale);
-
-        // II. COSMOS - Rotation based on solarFlux
-        this.layers.cosmos.rotation.y += 0.001 * (state.cosmos.solarFlux / 100);
-
-        // III. GEO - Displacement based on magneticStress
-        const positions = this.layers.geo.geometry.attributes.position.array;
-        for (let i = 0; i < positions.length; i += 3) {
-            const x = positions[i];
-            const y = positions[i + 1];
-            positions[i + 2] = Math.sin(x * 0.5 + t) * Math.cos(y * 0.5 + t) * (state.geo.magneticStress / 20);
-        }
-        this.layers.geo.geometry.attributes.position.needsUpdate = true;
-
-        // IV. BIO - Growth height
-        this.layers.bio.children.forEach((stem, i) => {
-            const h = state.bio.growthRate * (1 + Math.sin(t + i));
-            stem.scale.y = h;
-            stem.position.y = -2 + h / 2;
+        // I. TIME - Breathing and interweaving knots
+        const breathe = 1 + Math.sin(t * (state.time.pulse / 5)) * 0.2;
+        this.layers.time.scale.set(breathe, breathe, breathe);
+        this.layers.time.children.forEach((knot, i) => {
+            knot.rotation.y += 0.01 * (i + 1);
+            knot.rotation.z += 0.005;
         });
 
-        // V. SOCIAL - Chaotic movement
-        this.layers.social.rotation.x += 0.01 * state.social.anxiety;
-        this.layers.social.rotation.y += 0.012 * state.social.anxiety;
-        const socialScale = 1 + Math.random() * 0.05 * state.social.anxiety;
-        this.layers.social.scale.set(socialScale, socialScale, socialScale);
+        // II. COSMOS - Flowing particles
+        const streamPos = this.layers.cosmos.geometry.attributes.position.array;
+        const streamLife = this.layers.cosmos.userData.life;
+        for (let i = 0; i < streamLife.length; i++) {
+            streamLife[i] += 0.005 * (state.cosmos.solarFlux / 100);
+            if (streamLife[i] > 1) {
+                streamLife[i] = 0;
+            }
+            const angle = streamLife[i] * Math.PI * 4;
+            const r = 10 * (1 - streamLife[i]);
+            streamPos[i * 3] = Math.cos(angle + i) * r;
+            streamPos[i * 3 + 1] = Math.sin(angle * 0.5) * r;
+            streamPos[i * 3 + 2] = Math.sin(angle + i) * r;
+        }
+        this.layers.cosmos.geometry.attributes.position.needsUpdate = true;
 
-        // VI. META - Influence uniform
+        // III. GEO - Sphere rotation
+        this.layers.geo.rotation.y = t * 0.1;
+        this.layers.geo.rotation.z = Math.sin(t * 0.5) * 0.2;
+
+        // IV. BIO - Interweaving Spirals
+        this.layers.bio.rotation.y = -t * 0.2 * state.bio.growthRate;
+        this.layers.bio.children.forEach((tube, i) => {
+            tube.scale.setScalar(1 + Math.sin(t + i) * 0.1);
+        });
+
+        // V. SOCIAL - Interweaving nodes
+        this.layers.social.children.forEach((node, i) => {
+            const angle = t * node.userData.speed * (state.social.anxiety + 1) + i;
+            node.position.x = Math.cos(angle) * (2.5 + Math.sin(t * 0.5) * 1);
+            node.position.y = Math.sin(angle * 1.5) * 2;
+            node.position.z = Math.sin(angle) * (2.5 + Math.cos(t * 0.5) * 1);
+        });
+
+        // VI. META
         if (this.layers.meta.material.uniforms) {
             this.layers.meta.material.uniforms.time.value = t;
             this.layers.meta.material.uniforms.harmony.value = state.meta.harmony;
         }
 
-        // Global camera movement
-        this.camera.position.x = Math.sin(t * 0.2) * 0.5;
+        this.camera.position.x = Math.sin(t * 0.2) * 3;
+        this.camera.position.z = 8 + Math.cos(t * 0.2) * 1.5;
         this.camera.lookAt(0, 0, 0);
     }
+
+
+
 
     animate() {
         requestAnimationFrame(() => this.animate());
