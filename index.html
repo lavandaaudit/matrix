@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBONARIUM · ЄДИНА МАТРИЦЯ · Lab №3</title>
+    <meta name="description" content="Лабораторія буття: Багатовимірна матриця симуляцій як шарів одного поля реальності.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <div id="matrix-container"></div>
+    <div id="overlay"></div>
+
+    <main id="app">
+        <header>
+            <div class="logo">
+                <span class="glitch" data-text="IBONARIUM">IBONARIUM</span>
+                <span class="version">LAB.v3.0.MATRIX</span>
+            </div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="label">STATUS:</span>
+                    <span class="value pulse">SYNCHRONIZED</span>
+                </div>
+                <div id="global-harmony" class="status-item">
+                    <span class="label">HARMONY:</span>
+                    <span class="value">0.88</span>
+                </div>
+                <div id="current-time" class="status-item">--:--:--</div>
+            </div>
+        </header>
+
+        <section class="matrix-interface">
+            <aside class="layers-panel">
+                <div class="panel-header">МАТРИЦЯ ШАРІВ</div>
+                
+                <div class="layer-item active" data-layer="meta">
+                    <div class="layer-info">
+                        <span class="layer-num">VI</span>
+                        <span class="layer-name">МЕТА-РІВЕНЬ</span>
+                    </div>
+                    <div class="layer-stats" id="stats-meta">
+                        Stability: 92% | Harmony: 0.88
+                    </div>
+                </div>
+
+                <div class="layer-item" data-layer="social">
+                    <div class="layer-info">
+                        <span class="layer-num">V</span>
+                        <span class="layer-name">СОЦІУМ</span>
+                    </div>
+                    <div class="layer-stats" id="stats-social">
+                        Anxiety: Low | Connectivity: High
+                    </div>
+                </div>
+
+                <div class="layer-item" data-layer="bio">
+                    <div class="layer-info">
+                        <span class="layer-num">IV</span>
+                        <span class="layer-name">БІОСФЕРА</span>
+                    </div>
+                    <div class="layer-stats" id="stats-bio">
+                        Growth: 1.2x | Oxygen: 20.9%
+                    </div>
+                </div>
+
+                <div class="layer-item" data-layer="geo">
+                    <div class="layer-info">
+                        <span class="layer-num">III</span>
+                        <span class="layer-name">ГЕО + КЛІМАТ</span>
+                    </div>
+                    <div class="layer-stats" id="stats-geo">
+                        MagSTRESS: 32nT | Temp: 14°C
+                    </div>
+                </div>
+
+                <div class="layer-item" data-layer="cosmos">
+                    <div class="layer-info">
+                        <span class="layer-num">II</span>
+                        <span class="layer-name">КОСМОС</span>
+                    </div>
+                    <div class="layer-stats" id="stats-cosmos">
+                        SolarFlux: 145 | Phase: Waxing
+                    </div>
+                </div>
+
+                <div class="layer-item" data-layer="time">
+                    <div class="layer-info">
+                        <span class="layer-num">I</span>
+                        <span class="layer-name">ЧАС / РИТМ</span>
+                    </div>
+                    <div class="layer-stats" id="stats-time">
+                        Pulse: 7.83Hz | Entropy: 0.04
+                    </div>
+                </div>
+            </aside>
+
+            <div class="central-view">
+                <div id="data-terminal">
+                    <div class="terminal-content" id="terminal-log">
+                        [SYS] Initializing Unified Matrix...
+                        [SYS] Consciousness layers mapped.
+                        [SYS] Real-time data sync established...
+                    </div>
+                </div>
+            </div>
+
+            <aside class="control-panel">
+                <div class="panel-header">АНАЛІТИКА ПОЛЯ</div>
+                <div class="analytics-card">
+                    <label>Influence Loops</label>
+                    <div class="flow-diagram" id="influence-loop">
+                        COSMOS → GEO → BIO → SOCIAL
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <label>Entropy Gradient</label>
+                    <div class="chart-mini" id="entropy-chart">
+                        <!-- Simple visual representation -->
+                        <div class="bar" style="height: 40%"></div>
+                        <div class="bar" style="height: 45%"></div>
+                        <div class="bar" style="height: 38%"></div>
+                        <div class="bar" style="height: 52%"></div>
+                        <div class="bar" style="height: 60%"></div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn-primary" id="save-state">ЗБЕРЕГТИ СТАН (SNAPSHOT)</button>
+                    <button class="btn-secondary" id="compare-days">ПОРІВНЯТИ ДНІ</button>
+                </div>
+            </aside>
+        </section>
+
+        <footer>
+            <div class="footer-info">ЛАБОРАТОРІЯ БУТТЯ · IBONARIUM © 2026</div>
+            <div class="footer-links">
+                <a href="#">GITHUB</a>
+                <a href="#">LOGS</a>
+            </div>
+        </footer>
+    </main>
+
+    <script src="viz.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
